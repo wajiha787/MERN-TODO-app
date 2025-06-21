@@ -19,10 +19,12 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv://wajiha02:Glossylips02
 .then(() => console.log('Connected to MongoDB Atlas'))
 .catch(err => console.error('MongoDB Atlas connection error:', err));
 
+
 // Models
 const User = mongoose.model('User', new mongoose.Schema({
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
+  
 }));
 
 const Todo = mongoose.model('Todo', new mongoose.Schema({

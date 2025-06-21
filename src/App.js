@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import TodoApp from "./TodoApp";
-import LoginPage from "./LoginPage";
+import Navbar from "./components/Navbar";
+import LoginPage from "./components/LoginPage";
+import TodoApp from "./components/TodoApp";
+import './App.css';
 
 const App = () => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    // Check if user is already logged in (e.g., token exists)
     const token = localStorage.getItem("token");
     if (token) {
-      // You might want to verify the token with your backend here
-      // For simplicity, we'll just set a dummy user
       setUser({ name: "User" });
     }
   }, []);
@@ -27,28 +26,19 @@ const App = () => {
 
   return (
     <Router>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            user ? (
-              <TodoApp user={user} onLogout={handleLogout} />
-            ) : (
-              <Navigate to="/login" />
-            )
-          }
-        />
-        <Route
-          path="/login"
-          element={
-            user ? (
-              <Navigate to="/" />
-            ) : (
-              <LoginPage onLogin={handleLogin} />
-            )
-          }
-        />
-      </Routes>
+      {user && <Navbar onLogout={handleLogout} user={user} />}
+      <div className="container">
+        <Routes>
+          <Route
+            path="/"
+            element={user ? <TodoApp user={user} /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/login"
+            element={!user ? <LoginPage onLogin={handleLogin} /> : <Navigate to="/" />}
+          />
+        </Routes>
+      </div>
     </Router>
   );
 };
