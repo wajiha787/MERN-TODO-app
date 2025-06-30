@@ -12,10 +12,11 @@ app.use(cors());
 app.use(express.json());
 
 // Database connection
-mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv://wajiha02:Glossylips02@cluster0.qfnzm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/todos', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
+
 .then(() => console.log('Connected to MongoDB Atlas'))
 .catch(err => console.error('MongoDB Atlas connection error:', err));
 
